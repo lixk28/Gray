@@ -1,0 +1,155 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gray}[2025/04/15 the gray package]
+
+% gray colors
+\RequirePackage{color}
+\RequirePackage{xcolor}
+
+% shades of gray: https://en.wikipedia.org/wiki/Shades_of_gray
+\definecolor{lotion}{HTML}{FAFAFA}
+\definecolor{whitesmoke}{HTML}{F5F5F5}
+\definecolor{brightgray}{HTML}{ECECEC}
+% \definecolor{platium}{HTML}{E5E4E2}
+\definecolor{gainsboro}{HTML}{DCDCDC}
+\definecolor{lightgray}{HTML}{D3D3D3}
+\definecolor{silver}{HTML}{C0C0C0}
+\definecolor{mediumgray}{HTML}{BEBEBE}
+\definecolor{darkgray}{HTML}{A9A9A9}
+\definecolor{gray}{HTML}{808080}
+\definecolor{spanishgray}{HTML}{989898}
+\definecolor{davygray}{HTML}{555555}
+\definecolor{tundora}{HTML}{404040}
+
+
+% hyperlinks and references
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    breaklinks=true,
+    linkcolor=tundora,
+    urlcolor=tundora,
+    citecolor=tundora,
+    % allbordercolors=gray,
+    % citebordercolor=gray,
+    % filebordercolor=gray,
+    % linkbordercolor=gray,
+}
+
+
+\RequirePackage{amsmath,amsthm,amssymb,amsfonts}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+
+% Proof
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
+
+% Theorem
+\NewTcbTheorem[auto counter, number within=section]{theorem}{Theorem}{%
+    separator sign={\ },
+    colback=whitesmoke,
+    colframe=darkgray,
+    colbacktitle=gainsboro,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    parbox=false,
+    boxrule=1pt,
+    arc=1pt,
+    toptitle=0.3em,
+    bottomtitle=0.2em,
+    boxsep=0.4em,
+    left=0.2em,
+    right=0.2em,
+}{theo}
+
+% Definition
+\NewTcbTheorem[auto counter, number within=section]{definition}{Definition}{%
+    separator sign={\ },
+    colback=whitesmoke,
+    colframe=darkgray,
+    colbacktitle=gainsboro,
+    coltitle=black,
+    fonttitle=\bfseries\large,
+    parbox=false,
+    boxrule=0pt,
+    arc=1pt,
+    toptitle=0.3em,
+    bottomtitle=0.2em,
+    boxsep=0.4em,
+    left=0.2em,
+    right=0.2em,
+}{defn}
+
+% Example
+\NewTcbTheorem[auto counter, number within=section]{example}{Example}{%
+    separator sign={\ },
+    description delimiters parenthesis,
+    attach title to upper={\quad},
+    breakable=true,
+    colback=lotion,
+    colframe=darkgray,
+    colbacktitle=brightgray,
+    coltitle=black,
+    fonttitle=\bfseries\normalsize,
+    parbox=false,
+    boxrule=0pt,
+    arc=2pt,
+    toptitle=0.3em,
+    bottomtitle=0.2em,
+    boxsep=0.4em,
+    left=0.2em,
+    right=0.2em,
+}{exmp}
+
+% Admonition
+\newtcolorbox[no counter]{admonition}[1][]{%
+    % blanker,
+    title=#1,
+    coltitle=black,
+    colback=lotion,
+    detach title,
+    before upper={\tcbtitle\quad},
+    fonttitle=\bfseries\large,
+    boxrule=0pt,
+    left=1em,
+    top=1em,
+    bottom=1em,
+    boxsep=0pt,
+    borderline west={1mm}{0pt}{davygray}
+}
+
+% grayburger and graycell, used to highlight or emphasize some text, like concepts or terminologies
+% usage:
+% \grayburger{a-cool-concept}
+% \graycell{another-cool-concept}
+\newtcbox{\grayburger}[1][silver]{
+    on line,
+    arc=0pt,
+    outer arc=0pt,
+    colback=#1!10!white,
+    colframe=#1!40!black,
+    boxsep=0pt,
+    left=1pt,
+    right=1pt,
+    top=2pt,
+    bottom=2pt,
+    boxrule=0pt,
+    bottomrule=1pt,
+    toprule=1pt
+}
+
+\newtcbox{\graycell}[1][silver]{
+    on line,
+    arc=0pt,
+    colback=#1!10!white,
+    colframe=#1!40!black,
+    boxrule=1pt,
+    before upper={\rule[-3pt]{0pt}{10pt}},
+    boxsep=0pt,
+    left=5pt,
+    right=5pt,
+    top=3pt,
+    bottom=2pt
+}
