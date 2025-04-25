@@ -1,15 +1,16 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{grayart}[grayart by Xuekun Li]
 
-\LoadClass[scheme=plain,a4paper,oneside]{ctexart}
+\LoadClass[16pt,a4paper,oneside]{article}
 
+\RequirePackage{xeCJK}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 
 % The "gray" package
 \RequirePackage{gray}
 
-\RequirePackage{mathpazo}
+% \RequirePackage{mathpazo}
 \RequirePackage{lipsum}
 
 \RequirePackage{graphicx}
@@ -24,8 +25,8 @@
 }
 
 \RequirePackage{fancyhdr}
-\renewcommand{\sectionmark}[1]{\markboth{\bfseries\thesection\quad#1}{}}
-\renewcommand{\subsectionmark}[1]{\markright{\bfseries\thesubsection\quad#1}}
+\renewcommand{\sectionmark}[1]{\markboth{\bfseries\thesection\hspace{1em}#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{\bfseries\thesubsection\hspace{1em}#1}}
 
 \fancypagestyle{grayart}{
     \fancyhf{} % clear all header and footer fields
@@ -45,3 +46,29 @@
 \setlength{\parindent}{0pt}
 % indent between paragraphs
 \setlength{\parskip}{3mm}
+
+\RequirePackage{authblk}
+\RequirePackage{abstract}
+\setlength{\absleftindent}{0pt}
+\setlength{\absparindent}{2mm}
+
+
+% definition
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]%
+{definition}{Definition}{DefinitionStyle}{defn}
+
+% theorem
+\newtcbtheorem[number within=section, crefname={theorem}{theorems}]%
+{theorem}{Theorem}{TheoremStyle}{theo}
+
+% lemma
+
+% example
+\newtcbtheorem[number within=section, crefname={example}{examples}]%
+{example}{Example}{ExampleStyle}{exmp}
+
+% problem
+\newtcbtheorem[number within=section, crefname={problem}{problems}]%
+{problem}{Problem}{ProblemStyle}{prob}
+
+% solution

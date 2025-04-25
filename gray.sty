@@ -34,117 +34,61 @@
     % filebordercolor=gray,
     % linkbordercolor=gray,
 }
+\usepackage{caption}
+
+% for breakable underline \ul{}
+\usepackage{soul}
 
 
-\RequirePackage{amsmath,amsthm,amssymb,amsfonts}
+% math
+\RequirePackage[tbtags]{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{amsfonts}
+% Make typesetting math equations simpler and faster, especially for vectors and matrices
+\RequirePackage{physics}
+
 \RequirePackage{tcolorbox}
 \tcbuselibrary{theorems,skins,breakable}
 
-% Proof
-\makeatletter
-\renewenvironment{proof}[1][\proofname]{%
-\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
-\makeatother
+\RequirePackage{xargs}
+\RequirePackage{keyval}
+\RequirePackage{xkeyval}
+\RequirePackage{pgfkeys}
+%
+\RequirePackage{ifthen}
 
-% Theorem
-\NewTcbTheorem[auto counter, number within=section]{theorem}{Theorem}{%
-    separator sign={\ },
-    colback=whitesmoke,
-    colframe=darkgray,
-    colbacktitle=gainsboro,
-    coltitle=black,
-    fonttitle=\bfseries\large,
-    parbox=false,
-    boxrule=1pt,
-    arc=1pt,
-    toptitle=0.3em,
-    bottomtitle=0.2em,
-    boxsep=0.4em,
-    left=0.2em,
-    right=0.2em,
-}{theo}
+\RequirePackage{empheq}
+\RequirePackage{mathtools}
+\RequirePackage{cleveref}
 
-% Definition
-\NewTcbTheorem[auto counter, number within=section]{definition}{Definition}{%
-    separator sign={\ },
-    colback=whitesmoke,
-    colframe=darkgray,
-    colbacktitle=gainsboro,
-    coltitle=black,
-    fonttitle=\bfseries\large,
-    parbox=false,
-    boxrule=0pt,
-    arc=1pt,
-    toptitle=0.3em,
-    bottomtitle=0.2em,
-    boxsep=0.4em,
-    left=0.2em,
-    right=0.2em,
-}{defn}
 
-% Example
-\NewTcbTheorem[auto counter, number within=section]{example}{Example}{%
-    separator sign={\ },
-    description delimiters parenthesis,
-    attach title to upper={\quad},
-    breakable=true,
-    colback=lotion,
-    colframe=darkgray,
-    colbacktitle=brightgray,
-    coltitle=black,
-    fonttitle=\bfseries\normalsize,
-    parbox=false,
-    boxrule=0pt,
-    arc=2pt,
-    toptitle=0.3em,
-    bottomtitle=0.2em,
-    boxsep=0.4em,
-    left=0.2em,
-    right=0.2em,
-}{exmp}
-
-% Admonition
-\newtcolorbox[no counter]{admonition}[1][]{%
-    % blanker,
-    title=#1,
-    coltitle=black,
-    colback=lotion,
-    detach title,
-    before upper={\tcbtitle\quad},
-    fonttitle=\bfseries\large,
-    boxrule=0pt,
-    left=1em,
-    top=1em,
-    bottom=1em,
-    boxsep=0pt,
-    borderline west={1mm}{0pt}{davygray}
-}
-
-% grayburger and graycell, used to highlight or emphasize some text, like concepts or terminologies
-% usage:
-% \grayburger{a-cool-concept}
-% \graycell{another-cool-concept}
-\newtcbox{\grayburger}[1][silver]{
+% inline burger
+\newtcbox{\burger}[1][black]{
     on line,
+    enhanced jigsaw,
+    opacityback=0,
     arc=0pt,
     outer arc=0pt,
-    colback=#1!10!white,
-    colframe=#1!40!black,
+    colframe=#1,
     boxsep=0pt,
     left=1pt,
     right=1pt,
-    top=2pt,
+    top=3pt,
     bottom=2pt,
     boxrule=0pt,
     bottomrule=1pt,
     toprule=1pt
 }
 
-\newtcbox{\graycell}[1][silver]{
-    on line,
-    arc=0pt,
-    colback=#1!10!white,
-    colframe=#1!40!black,
+% inline cell
+\newtcbox{\cell}[1][black]{
+    enhanced jigsaw,
+    sharp corners,
+    nobeforeafter,
+    tcbox raise base,
+    opacityback=0,
+    colframe=#1,
     boxrule=1pt,
     before upper={\rule[-3pt]{0pt}{10pt}},
     boxsep=0pt,
@@ -153,3 +97,125 @@
     top=3pt,
     bottom=2pt
 }
+
+% display jail
+\newtcbox{\jail}[1][black]{
+    enhanced jigsaw,
+    sharp corners,
+    nobeforeafter,
+    tcbox raise base,
+    opacityback=0,
+    colframe=#1,
+    boxrule=1pt,
+}
+
+% \mathjail{} in aligned math environment
+\MakeAboxedCommand\mathjail\jail
+
+\newenvironment{equationjail}{\empheq[box=\jail]{equation}}{\endempheq}
+\newenvironment{alignjail}{\empheq[box=\jail]{align}}{\endempheq}
+
+
+
+\tcbset{
+    DefaultStyle/.style={
+        enhanced,
+        fonttitle=\sffamily\bfseries\large,
+        titlerule=0pt,
+        toptitle=2pt,
+        bottomtitle=2pt,
+        left=4pt,
+        right=4pt,
+        arc=4pt
+    },
+    DefinitionStyle/.style={
+        enhanced,
+        sharp corners,
+        lowerbox=ignored,
+        before upper={\parskip0.5\baselineskip},
+        separator sign={\ },
+        fonttitle=\bfseries\large,
+        colback=whitesmoke,
+        colframe=darkgray,
+        colbacktitle=gainsboro,
+        coltitle=black,
+        parbox=false,
+        arc=1pt,
+        boxsep=0.4em,
+        boxrule=0pt,
+        titlerule=0pt,
+        toptitle=0.3em,
+        bottomtitle=0.2em,
+        left=0.2em,
+        right=0.2em,
+    },
+    TheoremStyle/.style={
+        enhanced,
+        breakable,
+        fonttitle=\bfseries\large,
+        lower separated=false,
+        colback=whitesmoke,
+        colframe=darkgray,
+        colbacktitle=gainsboro,
+        coltitle=black,
+        arc=1pt,
+        titlerule=0pt,
+        toptitle=0.3em,
+        bottomtitle=0.2em,
+        left=0.2em,
+        right=0.2em,
+        before upper={\parskip0.5\baselineskip},
+        % before lower={\parskip0.5\baselineskip\textsf{\textbf{Proof:}}\ },
+        % after lower={\hfill$\qed$},
+    },
+    ExampleStyle/.style={
+        theorem style=plain,
+        breakable,
+        lower separated=false,
+        attach title to upper={\quad},
+        fonttitle={\bfseries\normalsize},
+        description delimiters parenthesis,
+        description color=black,
+        description font={\rmfamily\bfseries},
+        separator sign={\ },
+        terminator sign none,
+        arc=1pt,
+        boxrule=0pt,
+        left=0.2em,
+        right=0.2em,
+        middle=3mm,
+        colback=lotion,
+        colframe=darkgray,
+        colbacktitle=brightgray,
+        coltitle=black,
+        before upper={\parskip0.5\baselineskip\tcbtitle\quad},
+        % before lower={\parskip0.5\baselineskip\textsf{\textbf{Solution:}}\ }
+    },
+    ProblemStyle/.style={
+        theorem style=plain,
+        breakable,
+        before upper={\parskip0.5\baselineskip},
+        sharp corners,
+        lowerbox=ignored,
+        coltitle=black,
+        colback=white,
+        boxrule=0pt,
+        left=0pt, right=0pt,
+        fonttitle={\sffamily\bfseries},
+        separator sign={},
+        description delimiters none,
+        description color=black,
+        description font={\rmfamily\bfseries\slshape},
+        terminator sign={.},
+    }
+}
+
+
+
+
+
+% Proof
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse}
+\makeatother
